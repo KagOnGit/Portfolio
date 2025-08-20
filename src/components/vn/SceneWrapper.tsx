@@ -53,7 +53,7 @@ export default function SceneWrapper({
             <a className="nav-btn" href="#certificates">
               Certificates
             </a>
-            <a className="nav-btn" href="#achievements">
+            <a className="nav-btn" href="#extracurricular">
               Achievements
             </a>
             <a className="nav-btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
