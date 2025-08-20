@@ -6,6 +6,7 @@ import SceneWrapper from "@/components/vn/SceneWrapper";
 import Certificates from "@/components/Certificates";
 import Projects from "@/components/Projects";
 import Extracurricular from "@/components/Extracurricular";
+import FxToggle from "@/components/FxToggle";
 import { ExternalLink, Mail, Phone, Download } from "lucide-react";
 
 export default function Page() {
@@ -26,6 +27,11 @@ export default function Page() {
 
   return (
     <SceneWrapper onOpenDealLens={() => { /* optional analytics */ }}>
+      {/* FX Toggle Button - Fixed Position */}
+      <div className="fixed top-6 right-6 z-50">
+        <FxToggle />
+      </div>
+      
       {/* Hero Section */}
       <section id="hero" className="min-h-screen section-surface flex items-center justify-center">
         <motion.div
