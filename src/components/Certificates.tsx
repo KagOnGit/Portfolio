@@ -23,7 +23,7 @@ const certificates: Certificate[] = [
     issuer: "National University of Singapore",
     issuedDate: "Jun 2025", 
     url: "https://credentials.nus.edu.sg/3c2fa566-3bb9-4401-9b4b-93c4b7b7f8bb",
-    previewImage: undefined // Will use custom preview for NUS
+    previewImage: "https://image.thum.io/get/width/400/crop/240/noanimate/wait/10/https://credentials.nus.edu.sg/3c2fa566-3bb9-4401-9b4b-93c4b7b7f8bb"
   },
   {
     title: "Strategy and Game Theory for Management",
@@ -36,26 +36,29 @@ const certificates: Certificate[] = [
 
 function CertificatePreview({ cert }: { cert: Certificate }) {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageSrc, setImageSrc] = useState<string>(
-    cert.previewImage || `https://image.thum.io/get/width/400/crop/240/noanimate/${encodeURIComponent(cert.url)}`
-  );
+  const [imageError, setImageError] = useState(false);
+  const [currentSourceIndex, setCurrentSourceIndex] = useState(0);
   
+  // Define fallback sources with more options for NUS
   const fallbackSources = [
     cert.previewImage,
+    // Enhanced thum.io with wait time for dynamic content
+    `https://image.thum.io/get/width/400/crop/240/noanimate/wait/5/${encodeURIComponent(cert.url)}`,
+    // Alternative thum.io without wait
     `https://image.thum.io/get/width/400/crop/240/noanimate/${encodeURIComponent(cert.url)}`,
-    `https://api.screenshot.so/screenshot.png?url=${encodeURIComponent(cert.url)}&width=400&height=240`,
-    `https://htmlcsstoimage.com/demo_images/image.png?url=${encodeURIComponent(cert.url)}&width=400&height=240`
+    // Alternative screenshot approach
+    `https://htmlcsstoimage.com/demo_images/image.png?url=${encodeURIComponent(cert.url)}&width=400&height=240`,
   ].filter(Boolean);
   
-  const [currentFallbackIndex, setCurrentFallbackIndex] = useState(0);
+  const currentImageSrc = fallbackSources[currentSourceIndex];
   
   const tryNextFallback = () => {
-    if (currentFallbackIndex < fallbackSources.length - 1) {
-      setCurrentFallbackIndex(currentFallbackIndex + 1);
-      const nextSrc = fallbackSources[currentFallbackIndex + 1];
-      if (nextSrc) {
-        setImageSrc(nextSrc);
-      }
+    if (currentSourceIndex < fallbackSources.length - 1) {
+      setCurrentSourceIndex(currentSourceIndex + 1);
+      setImageLoaded(false);
+      setImageError(false);
+    } else {
+      setImageError(true);
     }
   };
   
@@ -69,9 +72,9 @@ function CertificatePreview({ cert }: { cert: Certificate }) {
   return (
     <div className="relative h-32 w-full mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
       {/* Try to load actual certificate preview */}
-      {imageSrc && (
+      {currentImageSrc && (
         <Image
-          src={imageSrc}
+          src={currentImageSrc}
           alt={`${cert.title} certificate preview`}
           fill
           className={`object-cover transition-all duration-500 ${
@@ -106,7 +109,7 @@ function CertificatePreview({ cert }: { cert: Certificate }) {
       </div>
       
       {/* Loading indicator */}
-      {!imageLoaded && currentFallbackIndex < fallbackSources.length - 1 && (
+      {!imageLoaded && !imageError && currentSourceIndex < fallbackSources.length - 1 && (
         <div className="absolute top-2 right-2 z-20">
           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
         </div>
