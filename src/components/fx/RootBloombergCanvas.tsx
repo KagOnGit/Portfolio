@@ -19,9 +19,26 @@ const clamp=(v:number,min:number,max:number)=>Math.max(min,Math.min(max,v))
 
 function BloombergCanvasEl(){
   const ref = useRef<HTMLCanvasElement|null>(null)
+  const hostRef = useRef<HTMLDivElement|null>(null)
   const last = useRef({ x: 0, y: 0, t: 0 })
   const target = useRef<Pt>({ x: -1, y: -1 })
   const radius = useRef({ cur: 0, target: 0 }) // hidden until hover
+
+  useEffect(() => {
+    // Create host element
+    const hostDiv = document.createElement('div');
+    hostDiv.id = 'root-bloomberg-canvas';
+    hostDiv.className = 'fx-layer pointer-events-none fixed inset-0 -z-40';
+    hostDiv.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(hostDiv);
+    hostRef.current = hostDiv;
+    
+    return () => {
+      if (hostRef.current) {
+        hostRef.current.remove();
+      }
+    };
+  }, []);
 
   useEffect(()=>{
     const cvs = ref.current!, ctx = cvs.getContext('2d', { alpha: true })!
@@ -141,9 +158,11 @@ function BloombergCanvasEl(){
     return ()=>{ stop=true; ro.disconnect(); document.removeEventListener('pointermove', onPointerMove); document.removeEventListener('pointerenter', onPointerEnter); document.removeEventListener('pointerleave', onPointerLeave); document.removeEventListener('wheel', onWheel) }
   },[])
 
+  if (!hostRef.current) return null;
+  
   return createPortal(
-    <canvas ref={ref} className='fixed inset-0 z-0 pointer-events-none' aria-hidden/>, 
-    document.body
+    <canvas ref={ref} className='absolute inset-0 w-full h-full' />,
+    hostRef.current
   )
 }
 

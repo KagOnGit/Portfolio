@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import './globals.css';
+import FxProvider from '@/providers/FxProvider';
 import { Analytics } from "@vercel/analytics/react";
 import SmoothScroll from "@/components/fx/SmoothScroll";
 import RootBloombergCanvas from "@/components/fx/RootBloombergCanvas";
-import FxInitializer from "@/components/FxInitializer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://portfolio-website.vercel.app'),
@@ -51,6 +51,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `(()=>{try{var s=localStorage.getItem('fx:state')||'on';document.documentElement.setAttribute('data-fx',s);}catch(e){}})();`
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData),
@@ -58,11 +63,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <FxInitializer />
-        <RootBloombergCanvas />
-        <SmoothScroll />
-        {children}
-        <Analytics />
+        <FxProvider>
+          <RootBloombergCanvas />
+          <SmoothScroll />
+          {children}
+          <Analytics />
+        </FxProvider>
       </body>
     </html>
   );
