@@ -2,169 +2,221 @@
 import React, { useEffect, useRef } from 'react';
 
 export default function RootBloombergCanvas() {
-  const ref = useRef<HTMLCanvasElement | null>(null);
-  const mouse = useRef({ x: 400, y: 300 });
+  const mainRef = useRef<HTMLCanvasElement|null>(null);
+  const offRef = useRef<HTMLCanvasElement|null>(null);
+  const mouse = useRef({ x: 0, y: 0, inside: false });
+  const radius = useRef({ cur: 0, target: 0 });
+  const dpr = typeof window !== 'undefined' ? Math.max(1, Math.min(2, window.devicePixelRatio || 1)) : 1;
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-    const canvas = ref.current!;
+    const canvas = mainRef.current!;
     const ctx = canvas.getContext('2d', { alpha: true })!;
-    let raf = 0;
-    const state = {
-      t: 0,
-      w: 0, h: 0,
-      quotes: [
-        { s:'AAPL', p: 192.4, d: +0.83 },
-        { s:'GOOGL', p: 168.8, d: -0.21 },
-        { s:'MSFT', p: 421.1, d: +0.37 },
-        { s:'TSLA', p: 218.5, d: -1.72 },
-        { s:'NVDA', p: 130.9, d: +1.11 },
-      ],
-      heat: new Array(18).fill(0).map((_,i)=>({ v: 0.2 + 0.8*Math.random(), x: i%6, y: (i/6|0) })),
-      candles: new Array(32).fill(0).map((_,i)=>({
-        x:i, o: rand(80,120), h: rand(120,140), l: rand(60,90), c: rand(80,120)
-      }))
-    };
+    const off = offRef.current = document.createElement('canvas');
+    const octx = off.getContext('2d', { alpha: true })!;
 
-    function rand(a:number,b:number){ return a + Math.random()*(b-a); }
+    let w = 0, h = 0, raf = 0;
+    const t0 = performance.now();
 
-    const resize = () => {
-      state.w = window.innerWidth;
-      state.h = window.innerHeight;
-      canvas.width = Math.floor(state.w * dpr);
-      canvas.height = Math.floor(state.h * dpr);
-      canvas.style.width = state.w + 'px';
-      canvas.style.height = state.h + 'px';
+    const quotes = [
+      { s:'AAPL', p: 192.42, d:+0.83 }, { s:'GOOGL', p:168.83, d:-0.21 },
+      { s:'MSFT', p: 421.10, d:+0.37 }, { s:'TSLA',  p:218.54, d:-1.72 },
+      { s:'NVDA', p: 130.90, d:+1.11 }, { s:'META',  p:311.32, d:+0.95 },
+    ];
+
+    // Mini orderbook columns
+    const book = new Array(18).fill(0).map((_,i)=>({
+      px: 100 + i*2 + Math.sin(i)*1,
+      vol: 8 + Math.floor(Math.random()*18),
+      side: i%2 ? 'bid':'ask'
+    }));
+
+    const sparks = new Array(6).fill(0).map((_,k)=>({
+      x: 0, y: 0, pts: new Array(48).fill(0).map((__,i)=>100+Math.sin(i*0.35 + k)*24 + Math.random()*8)
+    }));
+
+    const heat = new Array(36).fill(0).map((_,i)=>({ x:i%9, y:(i/9|0), v:Math.random() }));
+
+    function resize(){
+      w = Math.floor(window.innerWidth);
+      h = Math.floor(window.innerHeight);
+      canvas.width = Math.floor(w*dpr); canvas.height = Math.floor(h*dpr);
+      canvas.style.width = w+'px'; canvas.style.height = h+'px';
+      off.width = Math.floor(w*dpr); off.height = Math.floor(h*dpr);
+      octx.setTransform(dpr,0,0,dpr,0,0);
       ctx.setTransform(dpr,0,0,dpr,0,0);
-    };
+    }
     resize();
     window.addEventListener('resize', resize);
 
-    const onPointer = (e: PointerEvent) => {
-      mouse.current.x = e.clientX;
-      mouse.current.y = e.clientY;
-    };
-    window.addEventListener('pointermove', onPointer, { passive: true });
+    // Pointer handling
+    function enter(){ mouse.current.inside = true; radius.current.target = 360; }
+    function leave(){ mouse.current.inside = false; radius.current.target = 0; }
+    function move(e: PointerEvent){ mouse.current.x = e.clientX; mouse.current.y = e.clientY; if(!mouse.current.inside) enter(); }
+    window.addEventListener('pointermove', move, { passive:true });
+    window.addEventListener('pointerleave', leave);
 
-    function drawGrid() {
-      const { w,h } = state;
-      ctx.save();
-      ctx.globalAlpha = 0.18;
-      ctx.strokeStyle = '#0b3750';
-      ctx.lineWidth = 1;
-      const step = 48;
-      for (let x = 0; x <= w; x += step) {
-        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke();
-      }
-      for (let y = 0; y <= h; y += step) {
-        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
-      }
-      ctx.restore();
-    }
+    // Scene drawing (offscreen)
+    function drawScene(now:number){
+      const t = (now - t0);
 
-    function drawHeatmap(t:number){
-      const { w } = state;
-      const cw = 18, ch = 28;
-      const ox = w - cw*12 - 56;
-      const oy = 90;
-      ctx.save();
-      for (let i=0;i<state.heat.length;i++){
-        const c = state.heat[i];
-        const v = 0.5 + 0.5*Math.sin(t*0.001 + i);
-        const green = c.v*v;
-        const red = 1 - green;
-        ctx.fillStyle = `rgba(${Math.floor(220*red)}, ${Math.floor(255*green)}, 120, 0.35)`;
-        const xPos = ox + c.x*(cw+6);
-        const yPos = oy + c.y*(ch+6);
-        ctx.fillRect(xPos, yPos, cw, ch);
-        ctx.strokeStyle = 'rgba(0,120,255,0.25)';
-        ctx.strokeRect(xPos+0.5, yPos+0.5, cw-1, ch-1);
-      }
-      ctx.restore();
-    }
+      // clear
+      octx.clearRect(0,0,w,h);
 
-    function drawQuotes(t:number){
-      const { quotes } = state;
-      ctx.save();
-      ctx.font = '12px Inter, system-ui, -apple-system, Segoe UI, Roboto';
-      ctx.textBaseline = 'top';
-      const xPos = 80;
-      let yPos = 110;
+      // grid
+      octx.save();
+      octx.globalAlpha = 0.14;
+      octx.strokeStyle = '#0b3750';
+      const step = 40;
+      for(let x=0;x<=w;x+=step){ octx.beginPath(); octx.moveTo(x,0); octx.lineTo(x,h); octx.stroke(); }
+      for(let y=0;y<=h;y+=step){ octx.beginPath(); octx.moveTo(0,y); octx.lineTo(w,y); octx.stroke(); }
+      octx.restore();
+
+      // quotes panel (top left)
+      octx.save();
+      const qx = 72, qy = 90;
+      octx.font = '12px Inter, system-ui, -apple-system';
+      octx.textBaseline = 'top';
       quotes.forEach((q,i)=>{
-        const flick = 0.2*Math.sin(t*0.003 + i*1.7);
+        const flick = (Math.sin(t*0.003 + i*1.6))*0.15;
         const up = q.d >= 0;
-        ctx.fillStyle = 'rgba(160,180,200,0.75)';
-        ctx.fillText(q.s, xPos, yPos);
-        ctx.fillStyle = up ? 'rgba(30,220,140,0.85)' : 'rgba(255,80,80,0.85)';
-        ctx.fillText((q.p + flick).toFixed(2), xPos+60, yPos);
-        ctx.fillText((q.d + 0.02*Math.sin(t*0.004+i)).toFixed(2)+'%', xPos+120, yPos);
-        yPos += 20;
+        octx.fillStyle = 'rgba(165,185,205,0.85)'; octx.fillText(q.s, qx, qy + i*18);
+        octx.fillStyle = up ? 'rgba(30,220,140,0.9)' : 'rgba(255,80,80,0.9)';
+        octx.fillText((q.p+flick).toFixed(2), qx+56, qy + i*18);
+        octx.fillText((q.d + 0.02*Math.sin(t*0.004+i)).toFixed(2)+'%', qx+120, qy + i*18);
       });
-      ctx.restore();
-    }
+      octx.restore();
 
-    function drawCandles(t:number){
-      const { candles } = state;
-      const baseY = 360;
-      const step = 18;
-      ctx.save();
-      candles.forEach((c,i)=>{
-        const cx = 80 + i*step;
-        const off = Math.sin(t*0.002 + i*0.35)*6;
-        const up = c.c >= c.o;
+      // candlesticks strip
+      octx.save();
+      const baseY = 240, stepX = 14;
+      for(let i=0;i<80;i++){
+        const cx = qx + i*stepX;
+        const mid = 100 + 20*Math.sin(i*0.25 + t*0.002);
+        const o = mid + 20*Math.sin(i*0.35 + t*0.003);
+        const c = mid + 20*Math.sin(i*0.31 + t*0.0035);
+        const hi = Math.max(o,c) + 10 + 6*Math.sin(i*0.4 + t*0.001);
+        const lo = Math.min(o,c) - 10 - 6*Math.cos(i*0.3 + t*0.0013);
+        const up = c>=o;
+
         // wick
-        ctx.strokeStyle = 'rgba(0,160,255,0.55)';
-        ctx.beginPath();
-        ctx.moveTo(cx, baseY - c.l - off);
-        ctx.lineTo(cx, baseY - c.h - off);
-        ctx.stroke();
+        octx.strokeStyle = 'rgba(0,160,255,0.55)';
+        octx.beginPath(); octx.moveTo(cx, baseY - lo); octx.lineTo(cx, baseY - hi); octx.stroke();
+
         // body
-        ctx.fillStyle = up ? 'rgba(30,220,140,0.5)' : 'rgba(255,80,80,0.5)';
-        const top = baseY - Math.max(c.o,c.c) - off;
-        const h = Math.abs(c.c - c.o);
-        ctx.fillRect(cx-4, top, 8, Math.max(4,h));
+        octx.fillStyle = up ? 'rgba(30,220,140,0.5)' : 'rgba(255,80,80,0.5)';
+        const top = baseY - Math.max(o,c);
+        const hgt = Math.max(4, Math.abs(c-o));
+        octx.fillRect(cx-3, top, 6, hgt);
+      }
+      octx.restore();
+
+      // mini heatmap (top right)
+      octx.save();
+      const cw=16,ch=24, ox=w-9*(cw+6)-72, oy=94;
+      for(let i=0;i<heat.length;i++){
+        const c = heat[i]; const x = ox + c.x*(cw+6); const y = oy + c.y*(ch+6);
+        const vv = 0.35 + 0.65*(0.5 + 0.5*Math.sin(t*0.0015 + i));
+        const g = Math.min(1, Math.max(0, vv));
+        const r = 1-g;
+        octx.fillStyle = `rgba(${Math.floor(210*r)}, ${Math.floor(255*g)}, 130, 0.4)`;
+        octx.fillRect(x,y,cw,ch);
+        octx.strokeStyle = 'rgba(0,120,255,0.25)'; octx.strokeRect(x+0.5,y+0.5,cw-1,ch-1);
+      }
+      octx.restore();
+
+      // orderbook bars (bottom right)
+      octx.save();
+      const bx = w - 380, by = h - 120;
+      book.forEach((b,i)=>{
+        const len = b.vol + 6*Math.sin(t*0.003 + i);
+        octx.fillStyle = b.side==='bid' ? 'rgba(30,220,140,0.35)' : 'rgba(255,80,80,0.35)';
+        octx.fillRect(bx + (b.side==='bid'? 180-len : 200), by + i*6, (b.side==='bid'? len : len), 4);
       });
-      ctx.restore();
+      octx.restore();
+
+      // 3 small sparklines bottom
+      octx.save();
+      const sx = 160, sy = h - 110;
+      octx.strokeStyle = 'rgba(0,140,255,0.6)'; octx.lineWidth = 2;
+      sparks.forEach((s,k)=>{
+        const y0 = sy + k*26;
+        octx.beginPath();
+        for(let i=0;i<s.pts.length;i++){
+          const px = sx + i*6;
+          const py = y0 - (s.pts[i] + 6*Math.sin(t*0.003 + i*0.25 + k));
+          if (i === 0) {
+            octx.moveTo(px, py);
+          } else {
+            octx.lineTo(px, py);
+          }
+        }
+        octx.stroke();
+      });
+      octx.restore();
     }
 
-    function drawCursorGlow(){
-      const r = 180;
-      const g = ctx.createRadialGradient(mouse.current.x, mouse.current.y, 0, mouse.current.x, mouse.current.y, r);
-      g.addColorStop(0, 'rgba(0,120,255,0.22)');
-      g.addColorStop(1, 'rgba(0,120,255,0.0)');
-      ctx.fillStyle = g;
+    // Composite spotlight to main canvas
+    function drawToMain(){
+      // Base black
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0,0,w,h);
+
+      // Draw offscreen scene
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.drawImage(off, 0, 0, w*dpr, h*dpr, 0, 0, w, h);
+
+      // Black it out, then punch a circular window with gradient soften
+      ctx.globalCompositeOperation = 'destination-in';
+      const r = radius.current.cur;
+      const grd = ctx.createRadialGradient(mouse.current.x, mouse.current.y, Math.max(0,r*0.6), mouse.current.x, mouse.current.y, r);
+      grd.addColorStop(0, 'rgba(255,255,255,1)');
+      grd.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = grd;
       ctx.beginPath();
       ctx.arc(mouse.current.x, mouse.current.y, r, 0, Math.PI*2);
       ctx.fill();
+
+      // Reset
+      ctx.globalCompositeOperation = 'source-over';
     }
 
-    function loop(now:number){
-      state.t = now;
-      ctx.clearRect(0,0,state.w,state.h);
-      // Depth ordering (back to front):
-      drawGrid();
-      drawHeatmap(now);
-      drawQuotes(now);
-      drawCandles(now);
-      drawCursorGlow();
-      raf = requestAnimationFrame(loop);
+    function tick(now:number){
+      // ease radius
+      radius.current.cur += (radius.current.target - radius.current.cur) * 0.15;
+
+      drawScene(now);
+      drawToMain();
+      raf = requestAnimationFrame(tick);
     }
-    raf = requestAnimationFrame(loop);
+    raf = requestAnimationFrame(tick);
+
+    // Idle timer to collapse spotlight
+    let idleTimer:number|undefined;
+    const wake = () => { 
+      radius.current.target = 360; 
+      if(idleTimer) clearTimeout(idleTimer); 
+      idleTimer = window.setTimeout(() => {
+        radius.current.target = 0;
+      }, 2200); 
+    };
+    window.addEventListener('pointermove', wake, { passive:true });
+    wake();
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
-      window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerleave', leave);
+      window.removeEventListener('pointermove', wake);
     };
-  }, []);
+  }, [dpr]);
 
   return (
     <canvas
-      ref={ref}
+      ref={mainRef}
+      className='pointer-events-none fixed inset-0 -z-10'
       aria-hidden='true'
-      className='fx-layer pointer-events-none fixed inset-0 -z-10'
     />
   );
 }

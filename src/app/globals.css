@@ -5,19 +5,15 @@
 @tailwind utilities;
 
 :root{
-  --mx: 50vw;
-  --my: 50vh;
-  --spot: 0px;
-  --bb-grid: rgba(255,255,255,0.055);
-  --bb-blue: #0aa2ff;
-  --bb-green: #2dd4bf;
-  --bb-red: #f87171;
   --bg: #0f1729;
   --panel: rgba(15, 23, 42, 0.75);
   --finance-blue: #00b9fc;
   --finance-gold: #d4af37;
   --navy-primary: rgb(15, 23, 42);
   --navy-secondary: rgb(30, 41, 59);
+  --ink: #000000;
+  --accent: #0aa2ff;
+  --accent-2: #3a7bff;
 }
 
 html, body, #__next {
@@ -104,18 +100,6 @@ a { @apply underline-offset-2 hover:underline; }
     transition-duration: .001ms !important;
   }
 }
-
-/* Canvas background layer */
-.fx-layer {
-  opacity: 0.95;
-}
-
-:root {
-  --ink: #000000;           /* pitch black */
-  --accent: #0aa2ff;        /* finance blue */
-  --accent-2: #3a7bff;
-}
-
 
 /* Finance-blue headings/text helper */
 .text-accent { color: var(--accent); }
