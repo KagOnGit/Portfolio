@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Award, Building2, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface Certificate {
   title: string;
@@ -63,10 +64,17 @@ function CertificatePreview({ cert }: { cert: Certificate }) {
   };
   
   const getInstitutionColor = (issuer: string) => {
-    if (issuer.includes('Colorado')) return 'from-yellow-500 to-amber-600';
-    if (issuer.includes('Singapore')) return 'from-red-500 to-pink-600';
-    if (issuer.includes('IIM')) return 'from-green-500 to-emerald-600';
-    return 'from-blue-500 to-blue-600';
+    if (issuer.includes('Colorado')) return 'from-[#d4af37] to-[#b8941f]';
+    if (issuer.includes('Singapore')) return 'from-[#00b9fc] to-[#0099d4]';
+    if (issuer.includes('IIM')) return 'from-[#d4af37] to-[#00b9fc]';
+    return 'from-[#00b9fc] to-[#d4af37]';
+  };
+  
+  const getInstitutionIcon = (issuer: string) => {
+    if (issuer.includes('Colorado')) return <GraduationCap size={32} />;
+    if (issuer.includes('Singapore')) return <Building2 size={32} />;
+    if (issuer.includes('IIM')) return <Award size={32} />;
+    return <GraduationCap size={32} />;
   };
   
   return (
@@ -91,18 +99,16 @@ function CertificatePreview({ cert }: { cert: Certificate }) {
         imageLoaded ? 'opacity-0 z-0' : 'opacity-100 z-10'
       }`}>
         <div className="text-white text-center p-3">
-          <div className="text-2xl mb-2">
-            {cert.issuer.includes('Colorado') ? '🎓' : 
-             cert.issuer.includes('Singapore') ? '🏛️' :
-             cert.issuer.includes('IIM') ? '📊' : '🏆'}
+          <div className="mb-2 flex justify-center">
+            {getInstitutionIcon(cert.issuer)}
           </div>
-          <div className="font-bold text-sm leading-tight mb-1">
-            {cert.title.split(' ').slice(0, 2).join(' ')}
+          <div className="font-bold text-sm leading-tight mb-1 body-text-medium">
+            {cert.title.split(' ').slice(0, 3).join(' ')}
           </div>
-          <div className="text-xs opacity-90 font-medium">
+          <div className="text-xs opacity-90 font-medium body-text">
             {cert.issuer.split(' ').slice(0, 2).join(' ')}
           </div>
-          <div className="text-xs opacity-75 mt-1">
+          <div className="text-xs opacity-75 mt-1 body-text">
             {cert.issuedDate}
           </div>
         </div>
@@ -120,45 +126,46 @@ function CertificatePreview({ cert }: { cert: Certificate }) {
 
 export default function Certificates() {
   return (
-    <section className="mt-8">
-      <h2 className="text-2xl font-bold text-white mb-6 text-center">
-        Certificates & Achievements
-      </h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {certificates.map((cert, index) => (
-          <div
-            key={index}
-            className="v-card hover:shadow-lg transition-shadow duration-300"
-          >
-            <CertificatePreview cert={cert} />
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {certificates.map((cert, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: index * 0.1 }}
+          viewport={{ once: true }}
+          className="finance-card group"
+        >
+          <CertificatePreview cert={cert} />
 
-            {/* Certificate Info */}
-            <div className="space-y-2">
-              <h3 className="font-bold text-white text-lg leading-tight">
-                {cert.title}
-              </h3>
-              
-              <p className="text-white/60 text-sm">
-                {cert.issuer} • Issued {cert.issuedDate}
-              </p>
-              
-              {/* View Certificate Button */}
-              <div className="pt-3">
-                <a
-                  href={cert.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200"
-                >
-                  <ExternalLink size={16} />
-                  View Certificate
-                </a>
-              </div>
+          {/* Certificate Info */}
+          <div className="space-y-3">
+            <h3 className="font-bold text-white text-lg leading-tight body-text-medium">
+              {cert.title}
+            </h3>
+            
+            <div className="flex items-center gap-2 text-white/70 text-sm body-text">
+              <Building2 size={16} className="text-[#d4af37]" />
+              <span>{cert.issuer}</span>
+              <span>•</span>
+              <span>Issued {cert.issuedDate}</span>
+            </div>
+            
+            {/* View Certificate Button */}
+            <div className="pt-2">
+              <a
+                href={cert.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="finance-btn text-sm flex items-center gap-2 w-full justify-center group-hover:scale-105 transition-transform"
+              >
+                <ExternalLink size={16} />
+                View Certificate
+              </a>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
+        </motion.div>
+      ))}
+    </div>
   );
 }

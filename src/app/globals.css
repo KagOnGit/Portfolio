@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg: #050814;
-  --panel: rgba(10, 16, 35, 0.65);
+  --bg: #0f1729;
+  --panel: rgba(15, 23, 42, 0.75);
+  --finance-blue: #00b9fc;
+  --finance-gold: #d4af37;
+  --navy-primary: rgb(15, 23, 42);
+  --navy-secondary: rgb(30, 41, 59);
 }
 
 html, body, #__next {
@@ -14,14 +20,21 @@ html, body, #__next {
 body {
   @apply text-white bg-[var(--bg)];
   background-image:
-    radial-gradient(1200px 600px at 70% -10%, rgba(0,185,252,0.10), transparent 50%),
-    radial-gradient(900px 500px at 20% 110%, rgba(0,185,252,0.12), transparent 60%),
-    linear-gradient(180deg, #060b1f 0%, #050814 55%, #040812 100%);
+    radial-gradient(1200px 600px at 70% -10%, rgba(0,185,252,0.08), transparent 50%),
+    radial-gradient(900px 500px at 20% 110%, rgba(212,175,55,0.06), transparent 60%),
+    linear-gradient(180deg, #0f1729 0%, #1e293b 55%, #0f172a 100%);
   background-attachment: fixed;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
   font-feature-settings: "ss01" 1, "ss02" 1;
 }
 
 a { @apply underline-offset-2 hover:underline; }
+
+/* Enhanced glass morphism */
+.glass {
+  @apply rounded-2xl border border-white/10 bg-[var(--panel)] backdrop-blur-md shadow-[0_0_60px_rgba(0,185,252,0.18)];
+}
 
 .v-card {
   @apply rounded-2xl border border-white/10 bg-[var(--panel)] backdrop-blur p-4 shadow-glow;
@@ -31,10 +44,57 @@ a { @apply underline-offset-2 hover:underline; }
   @apply rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition px-4 py-2;
 }
 
+.finance-btn {
+  @apply px-6 py-3 bg-[#00b9fc] hover:bg-[#0099d4] text-white font-medium rounded-full transition-all duration-300 shadow-lg;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+.finance-btn-secondary {
+  @apply px-6 py-3 bg-[#d4af37] hover:bg-[#b8941f] text-white font-medium rounded-full transition-all duration-300 shadow-lg;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+.finance-card {
+  @apply relative bg-slate-800/60 backdrop-blur-md border border-slate-600/30 rounded-xl p-6 shadow-2xl transition-all duration-300;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+}
+
+.finance-card:hover {
+  @apply border-[#00b9fc]/40 shadow-[0_20px_40px_rgba(0,185,252,0.1)] transform -translate-y-1;
+}
+
 .input {
   @apply w-full rounded-xl bg-white/5 border border-white/10 p-3;
 }
 
 .textarea {
   @apply w-full rounded-xl bg-white/5 border border-white/10 p-3;
+}
+
+/* Enhanced headings */
+.heading {
+  @apply text-3xl md:text-4xl font-bold tracking-tight drop-shadow-[0_2px_10px_rgba(0,185,252,.25)];
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+}
+
+.body-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.body-text-medium {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* Motion-safe preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
 }
