@@ -6,6 +6,7 @@ import SceneWrapper from "@/components/vn/SceneWrapper";
 import DialogBox from "@/components/vn/DialogBox";
 import ChoiceButton from "@/components/vn/ChoiceButton";
 import StatBar from "@/components/vn/StatBar";
+import Certificates from "@/components/Certificates";
 import { chapters, START_CHAPTER, stats } from "@/data/story";
 
 type Chapter = typeof chapters[keyof typeof chapters];
@@ -111,6 +112,11 @@ export default function Page() {
               Actively growing: CFA L1 prep, financial modeling, and IB tech workflows.
             </div>
           </div>
+        )}
+
+        {/* Certificates section when on 'certificates' chapter */}
+        {chapterId === "certificates" && (
+          <Certificates />
         )}
 
         {/* Quick contact card */}

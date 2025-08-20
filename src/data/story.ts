@@ -71,14 +71,14 @@ export const chapters: Record<string, Chapter> = {
     tag: "Certificates",
     scenes: [
       { id: "s1", text: "Key credentials earned along the journey:" },
-      { id: "s2", text: "🏅 NUS Global Immersion Programme Certificate — verified" },
-      { id: "s3", text: "📜 Coursera: Financial Markets (Yale) — verified" },
-      { id: "s4", text: "📜 Coursera: AI for Everyone — verified" }
+      { id: "s2", text: "🎓 Business Analytics for Decision Making (University of Colorado Boulder) — Jul 2025" },
+      { id: "s3", text: "🏅 AI-Powered Business Analytics (National University of Singapore) — Jun 2025" },
+      { id: "s4", text: "📜 Strategy and Game Theory for Management (IIM Ahmedabad) — Apr 2025" }
     ],
     choices: [
-      { label: "View NUS Credential", next: "link_nus_cert" },
-      { label: "View Coursera: Financial Markets", next: "link_coursera_fin" },
-      { label: "View Coursera: AI for Everyone", next: "link_coursera_ai" },
+      { label: "View Business Analytics Cert", next: "link_coursera_fin" },
+      { label: "View NUS AI Analytics Cert", next: "link_nus_cert" },
+      { label: "View Strategy & Game Theory Cert", next: "link_coursera_ai" },
       { label: "Back to Profile", next: "profile" }
     ]
   },
