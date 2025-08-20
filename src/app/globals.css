@@ -247,3 +247,30 @@ html, body { background:#000 !important; }
 /* Header avatar size bump */
 .header-avatar{ width:48px; height:48px; }
 @media (min-width: 768px){ .header-avatar{ width:56px; height:56px; } }
+
+/* Navigation buttons - consistent pill shape */
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.75rem;
+  border: 2px solid rgb(59 130 246);
+  border-radius: 9999px;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.25;
+  background-color: transparent;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+.nav-btn:hover {
+  transform: scale(1.05);
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgb(96 165 250);
+}
+
+/* Certificate cards styling */
+.cert-card {
+  @apply relative flex flex-col bg-black border border-blue-600/40 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-blue-500/40 hover:-translate-y-1;
+  min-height: 320px;
+}

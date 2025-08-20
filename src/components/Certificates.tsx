@@ -1,41 +1,45 @@
 import Image from 'next/image';
-import { ExternalLink, Award, Building2, GraduationCap } from 'lucide-react';
+import { Award, Building2, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-interface Certificate {
+interface CertificateData {
   title: string;
   issuer: string;
   issuedDate: string;
   url: string;
   previewImage?: string;
+  logo: string;
 }
 
-const certificates: Certificate[] = [
+const certificates: CertificateData[] = [
   {
     title: "Business Analytics for Decision Making",
     issuer: "University of Colorado Boulder",
     issuedDate: "Jul 2025",
     url: "https://www.coursera.org/account/accomplishments/verify/2PN8Q00EPIOC",
-    previewImage: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~2PN8Q00EPIOC/CERTIFICATE_LANDING_PAGE~2PN8Q00EPIOC.jpeg"
+    previewImage: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~2PN8Q00EPIOC/CERTIFICATE_LANDING_PAGE~2PN8Q00EPIOC.jpeg",
+    logo: "/logos/cuboulder.png"
   },
   {
     title: "AI-Powered Business Analytics (Intermediate)",
     issuer: "National University of Singapore",
     issuedDate: "Jun 2025", 
     url: "https://credentials.nus.edu.sg/3c2fa566-3bb9-4401-9b4b-93c4b7b7f8bb",
-    previewImage: "https://image.thum.io/get/width/400/crop/240/noanimate/wait/10/https://credentials.nus.edu.sg/3c2fa566-3bb9-4401-9b4b-93c4b7b7f8bb"
+    previewImage: "https://image.thum.io/get/width/400/crop/240/noanimate/wait/10/https://credentials.nus.edu.sg/3c2fa566-3bb9-4401-9b4b-93c4b7b7f8bb",
+    logo: "/logos/nus.png"
   },
   {
     title: "Strategy and Game Theory for Management",
     issuer: "IIM Ahmedabad",
     issuedDate: "Apr 2025",
     url: "https://www.coursera.org/account/accomplishments/verify/8MCNN6YNELCI",
-    previewImage: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~8MCNN6YNELCI/CERTIFICATE_LANDING_PAGE~8MCNN6YNELCI.jpeg"
+    previewImage: "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~8MCNN6YNELCI/CERTIFICATE_LANDING_PAGE~8MCNN6YNELCI.jpeg",
+    logo: "/logos/iim.png"
   }
 ];
 
-function CertificatePreview({ cert }: { cert: Certificate }) {
+function CertificatePreview({ cert }: { cert: CertificateData }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [currentSourceIndex, setCurrentSourceIndex] = useState(0);
@@ -134,36 +138,45 @@ export default function Certificates() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: index * 0.1 }}
           viewport={{ once: true }}
-          className="tile frame group"
+          className="cert-card p-6"
         >
+          {/* Certificate Header with Logo */}
+          <div className="flex items-center gap-2 mb-2">
+            <Image 
+              src={cert.logo} 
+              alt={cert.issuer} 
+              width={28} 
+              height={28} 
+              className="rounded-full"
+              onError={(e) => {
+                // Fallback to institution icon if logo fails
+                const target = e.target as HTMLElement;
+                target.style.display = 'none';
+              }}
+            />
+            <h3 className="text-lg font-semibold text-white">{cert.title}</h3>
+          </div>
+
+          {/* Certificate Preview */}
           <CertificatePreview cert={cert} />
 
-          {/* Certificate Info */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-white text-lg leading-tight body-text-medium">
-              {cert.title}
-            </h3>
-            
-            <div className="flex items-center gap-2 text-white/70 text-sm body-text">
-              <Building2 size={16} className="text-[#d4af37]" />
-              <span>{cert.issuer}</span>
-              <span>•</span>
-              <span>Issued {cert.issuedDate}</span>
-            </div>
-            
-            {/* View Certificate Button */}
-            <div className="pt-2">
-              <a
-                href={cert.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="finance-btn text-sm flex items-center gap-2 w-full justify-center group-hover:scale-105 transition-transform"
-              >
-                <ExternalLink size={16} />
-                View Certificate
-              </a>
-            </div>
-          </div>
+          {/* Certificate Metadata */}
+          <p className="text-sm text-gray-400 mb-4">
+            {cert.issuer} • <span className="text-gray-500">{cert.issuedDate}</span>
+          </p>
+
+          {/* View Certificate Button */}
+          <a 
+            href={cert.url} 
+            target="_blank" 
+            rel="noreferrer"
+            className="mt-auto inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 transition-all shadow-md hover:shadow-blue-400/50"
+          >
+            <svg width="16" height="16" fill="currentColor" className="opacity-90">
+              <path d="M10 3l5 5-5 5M15 8H3"/>
+            </svg>
+            View Certificate
+          </a>
         </motion.div>
       ))}
     </div>

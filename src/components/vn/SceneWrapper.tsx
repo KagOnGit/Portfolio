@@ -44,19 +44,19 @@ export default function SceneWrapper({
             <span className="text-white/50 text-sm">Tech × Finance</span>
           </div>
           <div className="hidden lg:flex items-center gap-3">
-            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <a className="nav-btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
               Resume
             </a>
-            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#projects">
+            <a className="nav-btn" href="#projects">
               Projects
             </a>
-            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#certificates">
+            <a className="nav-btn" href="#certificates">
               Certificates
             </a>
-            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="https://deal-lens-ai-ma-screener.vercel.app" target="_blank" rel="noreferrer" onClick={onOpenDealLens}>
+            <a className="nav-btn flex items-center gap-1" href="https://deal-lens-ai-ma-screener.vercel.app" target="_blank" rel="noreferrer" onClick={onOpenDealLens}>
               <ExternalLink size={16}/> DealLens
             </a>
-            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#contact">
+            <a className="nav-btn" href="#contact">
               Contact
             </a>
             <FxToggle />
@@ -64,10 +64,10 @@ export default function SceneWrapper({
           
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-2">
-            <a className="tile frame flex items-center gap-2" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <a className="nav-btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
               Resume
             </a>
-            <a className="tile frame flex items-center gap-2" href="#contact">
+            <a className="nav-btn" href="#contact">
               Contact
             </a>
           </div>
