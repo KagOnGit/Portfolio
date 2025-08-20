@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 // Reuse the Bloomberg drawing, but mount directly to document.body
@@ -20,6 +20,7 @@ const clamp=(v:number,min:number,max:number)=>Math.max(min,Math.min(max,v))
 function BloombergCanvasEl(){
   const ref = useRef<HTMLCanvasElement|null>(null)
   const hostRef = useRef<HTMLDivElement|null>(null)
+  const [mounted, setMounted] = useState(false)
   const last = useRef({ x: 0, y: 0, t: 0 })
   const target = useRef<Pt>({ x: -1, y: -1 })
   const radius = useRef({ cur: 0, target: 0 }) // hidden until hover
@@ -32,15 +33,18 @@ function BloombergCanvasEl(){
     hostDiv.setAttribute('aria-hidden', 'true');
     document.body.appendChild(hostDiv);
     hostRef.current = hostDiv;
+    setMounted(true);
     
     return () => {
       if (hostRef.current) {
         hostRef.current.remove();
+        hostRef.current = null;
       }
     };
   }, []);
 
   useEffect(()=>{
+    if (!mounted || !ref.current) return;
     const cvs = ref.current!, ctx = cvs.getContext('2d', { alpha: true })!
     let W=innerWidth, H=innerHeight, DPR=Math.min(2, devicePixelRatio||1)
     const size=()=>{ W=innerWidth; H=innerHeight; DPR=Math.min(2, devicePixelRatio||1); cvs.width=Math.floor(W*DPR); cvs.height=Math.floor(H*DPR); cvs.style.width=W+'px'; cvs.style.height=H+'px'; ctx.setTransform(DPR,0,0,DPR,0,0) }
@@ -156,9 +160,9 @@ function BloombergCanvasEl(){
     document.addEventListener('wheel', onWheel, { passive:true })
 
     return ()=>{ stop=true; ro.disconnect(); document.removeEventListener('pointermove', onPointerMove); document.removeEventListener('pointerenter', onPointerEnter); document.removeEventListener('pointerleave', onPointerLeave); document.removeEventListener('wheel', onWheel) }
-  },[])
+  },[mounted])
 
-  if (!hostRef.current) return null;
+  if (!mounted || !hostRef.current) return null;
   
   return createPortal(
     <canvas ref={ref} className='absolute inset-0 w-full h-full' />,
