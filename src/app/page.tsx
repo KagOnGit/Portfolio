@@ -67,6 +67,48 @@ export default function Page() {
         </motion.div>
       </section>
 
+      {/* About Me Section */}
+      <section id="about" className="py-20 section-surface">
+        <div className="max-w-3xl mx-auto text-center">
+          {/* Glowing divider above */}
+          <div className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent mb-12"></div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-2xl font-bold text-accent mb-8">About Me</h2>
+            
+            <div className="space-y-6 text-base md:text-lg leading-relaxed text-white">
+              <p className="flex items-start gap-3">
+                <span className="text-xl">🎓</span>
+                <span>Final-year B.Tech Computer Science and System Engineering student at KIIT Bhubaneswar with a strong foundation in data structures, algorithms, and financial analytics. Currently preparing for CFA Level I (Feb 2026).</span>
+              </p>
+              
+              <p className="flex items-start gap-3">
+                <span className="text-xl">💻</span>
+                <span>Experienced in building analytical dashboards, AI-driven projects, and portfolio optimization tools with hands-on expertise in Python, Next.js, Power BI, and Orange.</span>
+              </p>
+              
+              <p className="flex items-start gap-3">
+                <span className="text-xl">🎶</span>
+                <span>Recognized as APN Student of the Year (2017) and trained in Indian Classical Flute with multiple certifications (Sangeet Visharad & Bhushan).</span>
+              </p>
+              
+              <p className="flex items-start gap-3">
+                <span className="text-xl">⚡</span>
+                <span>This combination of technical expertise, financial acumen, and cultural achievements reflects both analytical rigor and creative depth—qualities I bring into professional finance and technology roles.</span>
+              </p>
+            </div>
+          </motion.div>
+          
+          {/* Glowing divider below */}
+          <div className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent mt-12"></div>
+        </div>
+      </section>
+
       {/* Projects Section */}
       <section id="projects" className="py-20 section-surface">
         <motion.div
