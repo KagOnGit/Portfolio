@@ -18,9 +18,9 @@ export default function SceneWrapper({
       <div className="fixed left-0 right-0 top-0 z-20">
         <div className="mx-auto max-w-6xl flex items-center justify-between p-4">
           <div className="flex items-center gap-3">
-            <a href="https://github.com/KagOnGit" target="_blank" rel="noreferrer" className="flex-shrink-0">
+            <a href="https://www.linkedin.com/in/aditya-singh-9b1193261" target="_blank" rel="noreferrer" className="flex-shrink-0" aria-label="View LinkedIn profile">
               <Image
-                src="https://avatars.githubusercontent.com/u/106627640?v=4"
+                src="/avatar.png"
                 alt="Aditya Singh Profile Picture"
                 width={36}
                 height={36}
