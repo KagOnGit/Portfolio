@@ -13,7 +13,7 @@ export default function Extracurricular(){
   const titles = data.map(d=>d.title);
 
   return (
-    <section id='extracurricular' className='section-surface relative py-16'>
+    <section id='extracurricular' className='relative py-16 z-10'>
       <div className='mx-auto max-w-6xl px-4'>
         <h2 className='text-3xl md:text-4xl font-bold text-[#23a4ff] mb-8'>Extracurricular Achievements</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>

@@ -6,15 +6,11 @@ import Header from "@/components/Header";
 
 export default function SceneWrapper({
   children,
-  onOpenDealLens,
 }: {
   children: ReactNode;
-  onOpenDealLens?: () => void;
 }) {
-  // optional: any global side effects
-
   return (
-    <div className="min-h-screen section-surface w-full relative overflow-hidden">
+    <div className="min-h-screen w-full relative overflow-hidden">
       <Header />
 
 

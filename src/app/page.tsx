@@ -25,9 +25,9 @@ export default function Page() {
   }, []);
 
   return (
-    <SceneWrapper onOpenDealLens={() => { /* optional analytics */ }}>
+    <SceneWrapper>
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen section-surface flex items-center justify-center">
+      <section id="hero" className="min-h-screen flex items-center justify-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ export default function Page() {
       </section>
 
       {/* About Me Section */}
-      <section id="about" className="py-20 section-surface">
+      <section id="about" className="py-20 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           {/* Glowing divider above */}
           <div className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent mb-12"></div>
@@ -111,7 +111,7 @@ export default function Page() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 section-surface">
+      <section id="projects" className="py-20 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,7 +126,7 @@ export default function Page() {
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="py-20 section-surface">
+      <section id="certificates" className="py-20 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -144,7 +144,7 @@ export default function Page() {
       <Extracurricular />
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 section-surface">
+      <section id="contact" className="py-20 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
