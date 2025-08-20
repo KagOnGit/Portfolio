@@ -3,7 +3,6 @@ import React from "react";
 import { ReactNode } from "react";
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react";
 import Image from "next/image";
-import BloombergHoverCanvas from "@/components/fx/BloombergHoverCanvas";
 import FxToggle from "@/components/fx/FxToggle";
 
 function HeaderAvatar() {
@@ -32,8 +31,7 @@ export default function SceneWrapper({
   // optional: any global side effects
 
   return (
-    <div className="min-h-screen w-full relative overflow-hidden">
-      <BloombergHoverCanvas />
+    <div className="min-h-screen section-surface w-full relative overflow-hidden">
       
       {/* Top Nav */}
       <div className="fixed left-0 right-0 top-0 z-20">

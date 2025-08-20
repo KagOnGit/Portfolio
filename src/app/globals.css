@@ -153,3 +153,9 @@ html[data-fx='off'] .fx-hidden { display: none !important; }
 
 /* Bloomberg mode: absolute black base to avoid any bleed */
 html, body { background:#000 !important; }
+
+/* Page is pitch black via body; sections must be transparent so the canvas shows through */
+.section-surface { background: transparent !important; }
+
+/* Hard base */
+html, body { background:#000 !important; }

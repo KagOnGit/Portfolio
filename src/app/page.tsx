@@ -26,7 +26,7 @@ export default function Page() {
   return (
     <SceneWrapper onOpenDealLens={() => { /* optional analytics */ }}>
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center justify-center">
+      <section id="hero" className="min-h-screen section-surface flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export default function Page() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20">
+      <section id="projects" className="py-20 section-surface">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -83,7 +83,7 @@ export default function Page() {
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="py-20">
+      <section id="certificates" className="py-20 section-surface">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ export default function Page() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20">
+      <section id="contact" className="py-20 section-surface">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
