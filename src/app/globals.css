@@ -150,3 +150,6 @@ html[data-fx='off'] .-z-20 { display: none !important; }
 
 /* When FX off via toggle, hide heavy layers */
 html[data-fx='off'] .fx-hidden { display: none !important; }
+
+/* Bloomberg mode: absolute black base to avoid any bleed */
+html, body { background:#000 !important; }
