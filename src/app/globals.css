@@ -98,15 +98,15 @@ a { @apply underline-offset-2 hover:underline; }
   }
 }
 
-/* FX toggle functionality */
-html[data-fx='off'] .fx-hidden { display: none !important; }
-
-/* FX toggle visibility */
+/* FX global control */
 html[data-fx='off'] .fx-hidden,
-html[data-fx='off'] .-z-40,
-html[data-fx='off'] .-z-30,
-html[data-fx='off'] .-z-25,
-html[data-fx='off'] .-z-20 { display: none !important; }
+html[data-fx='off'] #root-bloomberg-canvas,
+html[data-fx='off'] .finance-aurora,
+html[data-fx='off'] .finance-textfield,
+html[data-fx='off'] .spotlight-reveal,
+html[data-fx='off'] .hover-wallstreet {
+  display: none !important;
+}
 
 :root {
   --ink: #000000;           /* pitch black */

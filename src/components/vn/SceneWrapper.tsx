@@ -3,7 +3,7 @@ import React from "react";
 import { ReactNode } from "react";
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react";
 import Image from "next/image";
-import FxToggle from "@/components/fx/FxToggle";
+import FxToggle from "@/components/FxToggle";
 
 function HeaderAvatar() {
   const [src, setSrc] = React.useState("/avatar.png");
@@ -76,6 +76,7 @@ export default function SceneWrapper({
             <a className="nav-btn" href="#contact">
               Contact
             </a>
+            <FxToggle />
           </div>
         </div>
       </div>
