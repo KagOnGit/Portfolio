@@ -103,3 +103,10 @@ a { @apply underline-offset-2 hover:underline; }
 
 /* FX toggle functionality */
 html[data-fx='off'] .fx-hidden { display: none !important; }
+
+/* FX toggle visibility */
+html[data-fx='off'] .fx-hidden,
+html[data-fx='off'] .-z-40,
+html[data-fx='off'] .-z-30,
+html[data-fx='off'] .-z-25,
+html[data-fx='off'] .-z-20 { display: none !important; }

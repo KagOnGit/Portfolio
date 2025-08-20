@@ -11,6 +11,7 @@ import FinanceAurora from "@/components/fx/FinanceAurora";
 import FinanceTextField from "@/components/fx/FinanceTextField";
 import SpotlightReveal from "@/components/fx/SpotlightReveal";
 import FxToggle from "@/components/fx/FxToggle";
+import FinanceGrid from "@/components/fx/FinanceGrid";
 
 function HeaderAvatar() {
   const [src, setSrc] = React.useState("/avatar.png");
@@ -40,12 +41,11 @@ export default function SceneWrapper({
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
       <BlueEdges />
+      <FinanceGrid />
       <div className="fx-hidden">
         <FinanceAurora />
       </div>
-      <div className="fx-hidden">
-        <FinanceTextField />
-      </div>
+      <FinanceTextField />
       <SpotlightReveal />
       <FinanceReveal />
       <FinanceBackdrop />
