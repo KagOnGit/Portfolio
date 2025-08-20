@@ -1,2 +1,17 @@
 node_modules
 Portfolio/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js
+.next/
+out/
+
+# Build outputs
+build/
+dist/

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://portfolio-website.vercel.app'),
   title: "Aditya Singh — Visual Novel Portfolio",
   description: "Story-driven portfolio blending tech, finance, and anime-inspired storytelling.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
