@@ -22,7 +22,7 @@ function Layer({ speed, offset=0 }:{speed:number; offset?:number}){
               top:`${y}%`, left:`${x}%`,
               fontSize:`${size}px`,
               transform:`rotate(${rot}deg)`,
-              color:`rgba(190,210,255,${op})`,
+              color:`rgba(10,162,255,${op})`,
               letterSpacing:'-.02em', whiteSpace:'nowrap'
             }}>{t}</span>
         )

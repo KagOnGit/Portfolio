@@ -110,3 +110,47 @@ html[data-fx='off'] .-z-40,
 html[data-fx='off'] .-z-30,
 html[data-fx='off'] .-z-25,
 html[data-fx='off'] .-z-20 { display: none !important; }
+
+:root {
+  --ink: #000000;           /* pitch black */
+  --accent: #0aa2ff;        /* finance blue */
+  --accent-2: #3a7bff;
+}
+
+body { background: var(--ink); color: #e7ecf5; }
+
+/* Finance-blue headings/text helper */
+.text-accent { color: var(--accent); }
+
+/* Black tiles + glowing blue frame */
+.tile {
+  @apply rounded-2xl bg-black/95 text-white shadow-none;
+}
+.frame {
+  position: relative;
+  border-radius: 1rem;
+}
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: .35;
+  transition: opacity .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+.frame:hover::before {
+  opacity: .95;
+  box-shadow: 0 0 36px rgba(10, 162, 255, .25);
+  filter: saturate(1.15);
+}
+
+/* Buttons keep dark chroma */
+.btn { @apply rounded-xl border border-white/10 bg-black/70 hover:bg-black/60 transition px-4 py-2; }
+
+/* When FX off via toggle, hide heavy layers */
+html[data-fx='off'] .fx-hidden { display: none !important; }

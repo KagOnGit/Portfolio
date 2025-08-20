@@ -12,6 +12,7 @@ import FinanceTextField from "@/components/fx/FinanceTextField";
 import SpotlightReveal from "@/components/fx/SpotlightReveal";
 import FxToggle from "@/components/fx/FxToggle";
 import FinanceGrid from "@/components/fx/FinanceGrid";
+import HoverWallStreet from "@/components/fx/HoverWallStreet";
 
 function HeaderAvatar() {
   const [src, setSrc] = React.useState("/avatar.png");
@@ -41,6 +42,7 @@ export default function SceneWrapper({
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
       <BlueEdges />
+      <HoverWallStreet />
       <FinanceGrid />
       <div className="fx-hidden">
         <FinanceAurora />
@@ -62,19 +64,19 @@ export default function SceneWrapper({
             <span className="text-white/50 text-sm">Tech × Finance</span>
           </div>
           <div className="hidden lg:flex items-center gap-3">
-            <a className="glass-btn flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
               Resume
             </a>
-            <a className="glass-btn flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#projects">
+            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#projects">
               Projects
             </a>
-            <a className="glass-btn flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#certificates">
+            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#certificates">
               Certificates
             </a>
-            <a className="glass-btn flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="https://deal-lens-ai-ma-screener.vercel.app" target="_blank" rel="noreferrer" onClick={onOpenDealLens}>
+            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="https://deal-lens-ai-ma-screener.vercel.app" target="_blank" rel="noreferrer" onClick={onOpenDealLens}>
               <ExternalLink size={16}/> DealLens
             </a>
-            <a className="glass-btn flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#contact">
+            <a className="tile frame flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#contact">
               Contact
             </a>
             <FxToggle />
@@ -82,10 +84,10 @@ export default function SceneWrapper({
           
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-2">
-            <a className="glass-btn flex items-center gap-2" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <a className="tile frame flex items-center gap-2" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
               Resume
             </a>
-            <a className="glass-btn flex items-center gap-2" href="#contact">
+            <a className="tile frame flex items-center gap-2" href="#contact">
               Contact
             </a>
           </div>

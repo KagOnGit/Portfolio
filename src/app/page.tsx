@@ -39,7 +39,7 @@ export default function Page() {
             <span>Finance & Technology</span>
           </div>
           
-          <h1 className="heading text-4xl md:text-6xl mb-6">
+          <h1 className="heading text-accent text-4xl md:text-6xl mb-6">
             Aditya Singh | Tech × Finance
           </h1>
           
@@ -75,7 +75,7 @@ export default function Page() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="heading text-3xl md:text-4xl text-center mb-12">
+          <h2 className="heading text-accent text-3xl md:text-4xl text-center mb-12">
             Case Studies & Projects
           </h2>
           <Projects />
@@ -90,7 +90,7 @@ export default function Page() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="heading text-3xl md:text-4xl text-center mb-12">
+          <h2 className="heading text-accent text-3xl md:text-4xl text-center mb-12">
             Professional Credentials
           </h2>
           <Certificates />
@@ -106,7 +106,7 @@ export default function Page() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="heading text-3xl md:text-4xl mb-8">
+          <h2 className="heading text-accent text-3xl md:text-4xl mb-8">
             Get In Touch
           </h2>
           <p className="text-lg text-white/70 mb-8 body-text max-w-2xl mx-auto">
@@ -114,7 +114,7 @@ export default function Page() {
           </p>
           
           <div className="flex flex-wrap justify-center gap-6">
-            <a href="mailto:adityasingh0929@gmail.com" className="finance-card p-6 hover:scale-105 transition-transform flex items-center gap-3">
+            <a href="mailto:adityasingh0929@gmail.com" className="tile frame p-6 hover:scale-105 transition-transform flex items-center gap-3">
               <Mail className="text-[#00b9fc]" size={24} />
               <div>
                 <div className="font-medium body-text-medium">Email</div>
@@ -122,7 +122,7 @@ export default function Page() {
               </div>
             </a>
             
-            <a href="tel:+919818722103" className="finance-card p-6 hover:scale-105 transition-transform flex items-center gap-3">
+            <a href="tel:+919818722103" className="tile frame p-6 hover:scale-105 transition-transform flex items-center gap-3">
               <Phone className="text-[#d4af37]" size={24} />
               <div>
                 <div className="font-medium body-text-medium">Phone</div>
