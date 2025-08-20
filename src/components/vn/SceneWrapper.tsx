@@ -15,7 +15,7 @@ export default function SceneWrapper({
 
   return (
     <div className="min-h-screen section-surface w-full relative overflow-hidden">
-      <Header onOpenDealLens={onOpenDealLens} />
+      <Header />
 
 
       {/* Content */}
