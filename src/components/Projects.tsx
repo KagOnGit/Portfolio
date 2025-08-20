@@ -69,13 +69,13 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: index * 0.1 }}
           viewport={{ once: true }}
-          className="tile frame group"
+          className="card-pro group p-6"
         >
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
             {/* Project Icon & Category */}
             <div className="flex-shrink-0">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#00b9fc]/20 to-[#d4af37]/20 flex items-center justify-center border border-[#00b9fc]/30">
-                <project.icon className="text-[#00b9fc]" size={28} />
+              <div className="icon-badge">
+                <project.icon className="text-[#00b9fc]" size={26} />
               </div>
               <div className="text-xs text-[#d4af37] font-medium mt-2 body-text-medium">
                 {project.category}
@@ -95,13 +95,13 @@ export default function Projects() {
                 </div>
                 
                 {/* Action Buttons */}
-                <div className="flex gap-2 flex-shrink-0">
+                <div className="project-actions">
                   {project.links.live && (
                     <a
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="finance-btn text-sm flex items-center gap-2"
+                      className="btn-pro" data-variant="demo"
                     >
                       <ExternalLink size={16} />
                       Live Demo
@@ -112,7 +112,7 @@ export default function Projects() {
                       href={project.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="finance-btn-secondary text-sm flex items-center gap-2"
+                      className="btn-pro" data-variant="code"
                     >
                       <Github size={16} />
                       Code
@@ -123,7 +123,7 @@ export default function Projects() {
                       href={project.links.certificate}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="finance-btn text-sm flex items-center gap-2"
+                      className="btn-pro" data-variant="demo"
                     >
                       <ExternalLink size={16} />
                       Certificate
@@ -157,12 +157,9 @@ export default function Projects() {
                 <h4 className="text-sm font-medium text-[#d4af37] mb-3 body-text-medium">
                   Technology Stack
                 </h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="tech-chips">
                   {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 text-xs bg-white/10 text-white/80 rounded-full border border-white/20 body-text"
-                    >
+                    <span key={tech} className="chip body-text">
                       {tech}
                     </span>
                   ))}

@@ -12,11 +12,11 @@ function HeaderAvatar() {
     <Image
       src={src}
       alt="Aditya Singh"
-      width={40}
-      height={40}
+      width={56}
+      height={56}
       priority
       onError={() => setSrc("/avatar-fallback.svg")}
-      className="rounded-full border-2 border-blue-400 shadow-md hover:shadow-blue-500/50 transition"
+      className="header-avatar rounded-full border-2 border-blue-400 shadow-md hover:shadow-blue-500/50 transition"
     />
   );
 }
