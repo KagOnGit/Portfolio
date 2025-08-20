@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import SceneWrapper from "@/components/vn/SceneWrapper";
 import Certificates from "@/components/Certificates";
 import Projects from "@/components/Projects";
+import ExtracurricularAchievements from "@/components/ExtracurricularAchievements";
 import { ExternalLink, Mail, Phone, Download } from "lucide-react";
 
 export default function Page() {
@@ -136,6 +137,21 @@ export default function Page() {
             Professional Credentials
           </h2>
           <Certificates />
+        </motion.div>
+      </section>
+
+      {/* Extracurricular Achievements Section */}
+      <section id="achievements" className="py-20 section-surface">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="heading text-accent text-3xl md:text-4xl text-center mb-12">
+            Extracurricular Achievements
+          </h2>
+          <ExtracurricularAchievements />
         </motion.div>
       </section>
 
