@@ -19,10 +19,7 @@ html, body, #__next {
 
 body {
   @apply text-white;
-  background: radial-gradient(1200px 800px at 80% -10%, rgba(0,120,255,0.08), transparent 60%),
-              radial-gradient(900px 600px at 10% 110%, rgba(0,140,255,0.10), transparent 65%),
-              linear-gradient(180deg, #0b0f14 0%, #090d12 50%, #070a0f 100%);
-  background-attachment: fixed;
+  background: #000000; /* Pure pitch black */
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-feature-settings: "ss01" 1, "ss02" 1;
@@ -117,7 +114,6 @@ html[data-fx='off'] .-z-20 { display: none !important; }
   --accent-2: #3a7bff;
 }
 
-body { background: var(--ink); color: #e7ecf5; }
 
 /* Finance-blue headings/text helper */
 .text-accent { color: var(--accent); }

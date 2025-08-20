@@ -3,16 +3,8 @@ import React from "react";
 import { ReactNode } from "react";
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react";
 import Image from "next/image";
-import ParallaxBackdrop from "@/components/fx/ParallaxBackdrop";
-import FinanceBackdrop from "@/components/fx/FinanceBackdrop";
-import FinanceReveal from "@/components/fx/FinanceReveal";
-import BlueEdges from "@/components/fx/BlueEdges";
-import FinanceAurora from "@/components/fx/FinanceAurora";
-import FinanceTextField from "@/components/fx/FinanceTextField";
-import SpotlightReveal from "@/components/fx/SpotlightReveal";
+import TradingHoverCanvas from "@/components/fx/TradingHoverCanvas";
 import FxToggle from "@/components/fx/FxToggle";
-import FinanceGrid from "@/components/fx/FinanceGrid";
-import HoverWallStreet from "@/components/fx/HoverWallStreet";
 
 function HeaderAvatar() {
   const [src, setSrc] = React.useState("/avatar.png");
@@ -41,17 +33,7 @@ export default function SceneWrapper({
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
-      <BlueEdges />
-      <HoverWallStreet />
-      <FinanceGrid />
-      <div className="fx-hidden">
-        <FinanceAurora />
-      </div>
-      <FinanceTextField />
-      <SpotlightReveal />
-      <FinanceReveal />
-      <FinanceBackdrop />
-      <ParallaxBackdrop />
+      <TradingHoverCanvas />
       
       {/* Top Nav */}
       <div className="fixed left-0 right-0 top-0 z-20">
@@ -94,11 +76,6 @@ export default function SceneWrapper({
         </div>
       </div>
 
-      {/* Additional backdrop glow */}
-      <div className="pointer-events-none absolute inset-0 opacity-30">
-        <div className="absolute -left-32 top-0 h-[120vh] w-[120vw] bg-[radial-gradient(closest-side,rgba(0,185,252,0.06),transparent)]" />
-        <div className="absolute -right-32 bottom-0 h-[120vh] w-[120vw] bg-[radial-gradient(closest-side,rgba(212,175,55,0.04),transparent)]" />
-      </div>
 
       {/* Content */}
       <main className="pt-20 px-4">
