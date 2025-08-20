@@ -1,5 +1,5 @@
 import './globals.css';
-import RootBloombergCanvas from '@/components/fx/RootBloombergCanvas';
+import RootBloombergCanvas from '@/lib/bloomberg/RootBloombergCanvas';
 
 export const metadata = { title: 'Portfolio' };
 
