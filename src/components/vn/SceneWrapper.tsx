@@ -1,7 +1,24 @@
 "use client";
+import React from "react";
 import { ReactNode } from "react";
 import { Github, Linkedin, ExternalLink, Mail, Phone } from "lucide-react";
 import Image from "next/image";
+
+function HeaderAvatar() {
+  const [src, setSrc] = React.useState("/avatar.png");
+  
+  return (
+    <Image
+      src={src}
+      alt="Aditya Singh"
+      width={40}
+      height={40}
+      priority
+      onError={() => setSrc("/avatar-fallback.svg")}
+      className="rounded-full border-2 border-blue-400 shadow-md hover:shadow-blue-500/50 transition"
+    />
+  );
+}
 
 export default function SceneWrapper({
   children,
@@ -19,14 +36,7 @@ export default function SceneWrapper({
         <div className="mx-auto max-w-6xl flex items-center justify-between p-4">
           <div className="flex items-center gap-3">
             <a href="https://www.linkedin.com/in/aditya-singh-9b1193261" target="_blank" rel="noreferrer" className="flex-shrink-0" aria-label="View LinkedIn profile">
-              <Image
-                src="/avatar.png"
-                alt="Aditya Singh Profile Picture"
-                width={36}
-                height={36}
-                className="rounded-full border-2 border-blue-400 shadow-md hover:shadow-blue-500/50 transition"
-                priority
-              />
+              <HeaderAvatar />
             </a>
             <div className="font-semibold tracking-wide">Aditya Singh</div>
             <span className="text-white/50 text-sm">Tech × Finance</span>
