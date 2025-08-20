@@ -98,9 +98,9 @@ a { @apply underline-offset-2 hover:underline; }
   }
 }
 
-/* --- FX global control --- */
-html[data-fx='off'] .fx-layer,
+/* --- FX global control (default ON) --- */
 html[data-fx='off'] #root-bloomberg-canvas,
+html[data-fx='off'] .fx-layer,
 html[data-fx='off'] .spotlight-reveal,
 html[data-fx='off'] .finance-aurora,
 html[data-fx='off'] .finance-textfield,
