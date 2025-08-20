@@ -12,9 +12,9 @@ module.exports = {
         mono: ['ui-monospace','SFMono-Regular','Menlo','monospace'],
       },
       colors: {
-        ink: "#0b1020",
-        neon: "#00b9fc",
-        myst: "#0c122b",
+        ink: '#0b0f14',
+        neon: '#0078ff',
+        myst: '#0c1220',
       },
       boxShadow: { glow: "0 0 60px rgba(0,185,252,0.18)" },
     },

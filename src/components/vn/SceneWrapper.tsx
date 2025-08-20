@@ -3,9 +3,10 @@ import React from "react";
 import { ReactNode } from "react";
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react";
 import Image from "next/image";
-import Spotlight from "@/components/fx/Spotlight";
 import ParallaxBackdrop from "@/components/fx/ParallaxBackdrop";
 import FinanceBackdrop from "@/components/fx/FinanceBackdrop";
+import FinanceReveal from "@/components/fx/FinanceReveal";
+import BlueEdges from "@/components/fx/BlueEdges";
 
 function HeaderAvatar() {
   const [src, setSrc] = React.useState("/avatar.png");
@@ -34,8 +35,9 @@ export default function SceneWrapper({
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
+      <BlueEdges />
+      <FinanceReveal />
       <FinanceBackdrop />
-      <Spotlight />
       <ParallaxBackdrop />
       
       {/* Top Nav */}
