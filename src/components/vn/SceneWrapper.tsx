@@ -7,6 +7,10 @@ import ParallaxBackdrop from "@/components/fx/ParallaxBackdrop";
 import FinanceBackdrop from "@/components/fx/FinanceBackdrop";
 import FinanceReveal from "@/components/fx/FinanceReveal";
 import BlueEdges from "@/components/fx/BlueEdges";
+import FinanceAurora from "@/components/fx/FinanceAurora";
+import FinanceTextField from "@/components/fx/FinanceTextField";
+import SpotlightReveal from "@/components/fx/SpotlightReveal";
+import FxToggle from "@/components/fx/FxToggle";
 
 function HeaderAvatar() {
   const [src, setSrc] = React.useState("/avatar.png");
@@ -36,6 +40,13 @@ export default function SceneWrapper({
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
       <BlueEdges />
+      <div className="fx-hidden">
+        <FinanceAurora />
+      </div>
+      <div className="fx-hidden">
+        <FinanceTextField />
+      </div>
+      <SpotlightReveal />
       <FinanceReveal />
       <FinanceBackdrop />
       <ParallaxBackdrop />
@@ -66,6 +77,7 @@ export default function SceneWrapper({
             <a className="glass-btn flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-transform" href="#contact">
               Contact
             </a>
+            <FxToggle />
           </div>
           
           {/* Mobile menu button */}

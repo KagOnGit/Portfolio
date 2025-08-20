@@ -100,3 +100,6 @@ a { @apply underline-offset-2 hover:underline; }
     transition-duration: .001ms !important;
   }
 }
+
+/* FX toggle functionality */
+html[data-fx='off'] .fx-hidden { display: none !important; }
