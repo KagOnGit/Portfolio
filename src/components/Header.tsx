@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 export default function Header() {
   return (
-    <header className='container mx-auto px-4 py-4 flex items-center justify-between'>
+    <header className='relative z-20 container mx-auto px-4 py-4 flex items-center justify-between'>
       {/* left: avatar + name */}
       <div className='flex items-center gap-3'>
         <Link href='/' className='inline-flex items-center gap-3'>
