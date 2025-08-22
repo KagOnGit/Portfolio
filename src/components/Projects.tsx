@@ -52,7 +52,7 @@ const projects = [
     ],
     links: {
       github: "https://github.com/KagOnGit/Portfolio",
-      live: "#"
+      live: "https://portfolio-website-three-theta-87.vercel.app"
     },
     icon: TrendingUp,
     category: "Web Development"

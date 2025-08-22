@@ -53,14 +53,14 @@ export default function Page() {
           </p>
           
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="#projects" className="finance-btn">
+            <a href="#projects" className="btn-pro btn-blue">
               View Projects
             </a>
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="finance-btn-secondary flex items-center gap-2">
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-pro btn-gold flex items-center gap-2">
               <Download size={18} />
               Resume
             </a>
-            <a href="https://deal-lens-ai-ma-screener.vercel.app" target="_blank" rel="noreferrer" className="finance-btn flex items-center gap-2">
+            <a href="https://deal-lens-ai-ma-screener.vercel.app" target="_blank" rel="noopener noreferrer" className="btn-pro btn-blue flex items-center gap-2">
               <ExternalLink size={18} />
               DealLens AI
             </a>
